@@ -1,0 +1,30 @@
+function treasureFinder(input) {
+    let key = input.shift().split(` `).map(Number);
+    let line;
+    let info = [];
+
+    while ((line = input.shift()) !== "find") {
+        let strLine = "";
+        let str = [...line];
+        let count = 0
+        let leng = key.length;
+        for (let a = 0; a < str.length; a++) {
+            let el = str[a].charCodeAt();
+            el -= key[count];
+            el = String.fromCharCode(el);
+            strLine += el;
+            count++;
+            if (count === leng) {
+                count = 0;
+            }
+        }
+        info.push(strLine);
+    }
+    info.forEach(element => {
+        element = element.split(`<`);
+        let gps = element.pop().split(`>`);
+        element = element[0].split(`&`);
+        let type = element[1];
+        console.log(`Found ${type} at ${gps[0]}`);
+    })
+}
